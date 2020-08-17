@@ -75,26 +75,29 @@ func HostKeyFromSiaPublicKey(spk types.SiaPublicKey) HostPublicKey {
 
 // HostSettings are the settings reported by a host.
 type HostSettings struct {
-	AcceptingContracts     bool               `json:"acceptingContracts"`
-	MaxDownloadBatchSize   uint64             `json:"maxDownloadBatchSize"`
-	MaxDuration            types.BlockHeight  `json:"maxDuration"`
-	MaxReviseBatchSize     uint64             `json:"maxReviseBatchSize"`
-	NetAddress             modules.NetAddress `json:"netAddress"`
-	RemainingStorage       uint64             `json:"remainingStorage"`
-	SectorSize             uint64             `json:"sectorSize"`
-	TotalStorage           uint64             `json:"totalStorage"`
-	UnlockHash             types.UnlockHash   `json:"unlockHash"`
-	WindowSize             types.BlockHeight  `json:"windowSize"`
-	Collateral             types.Currency     `json:"collateral"`
-	MaxCollateral          types.Currency     `json:"maxCollateral"`
-	BaseRPCPrice           types.Currency     `json:"baseRPCPrice"`
-	ContractPrice          types.Currency     `json:"contractPrice"`
-	DownloadBandwidthPrice types.Currency     `json:"downloadBandwidthPrice"`
-	SectorAccessPrice      types.Currency     `json:"sectorAccessPrice"`
-	StoragePrice           types.Currency     `json:"storagePrice"`
-	UploadBandwidthPrice   types.Currency     `json:"uploadBandwidthPrice"`
-	RevisionNumber         uint64             `json:"revisionNumber"`
-	Version                string             `json:"version"`
+	AcceptingContracts         bool               `json:"acceptingContracts"`
+	MaxDownloadBatchSize       uint64             `json:"maxDownloadBatchSize"`
+	MaxDuration                types.BlockHeight  `json:"maxDuration"`
+	MaxReviseBatchSize         uint64             `json:"maxReviseBatchSize"`
+	NetAddress                 modules.NetAddress `json:"netAddress"`
+	RemainingStorage           uint64             `json:"remainingStorage"`
+	SectorSize                 uint64             `json:"sectorSize"`
+	TotalStorage               uint64             `json:"totalStorage"`
+	UnlockHash                 types.UnlockHash   `json:"unlockHash"`
+	WindowSize                 types.BlockHeight  `json:"windowSize"`
+	Collateral                 types.Currency     `json:"collateral"`
+	MaxCollateral              types.Currency     `json:"maxCollateral"`
+	BaseRPCPrice               types.Currency     `json:"baseRPCPrice"`
+	ContractPrice              types.Currency     `json:"contractPrice"`
+	DownloadBandwidthPrice     types.Currency     `json:"downloadBandwidthPrice"`
+	SectorAccessPrice          types.Currency     `json:"sectorAccessPrice"`
+	StoragePrice               types.Currency     `json:"storagePrice"`
+	UploadBandwidthPrice       types.Currency     `json:"uploadBandwidthPrice"`
+	MaxEphemeralAccountBalance types.Currency     `json:"maxEphemeralAccountBalance"`
+	RevisionNumber             uint64             `json:"revisionNumber"`
+	SiaMuxPort                 string             `json:"siaMuxPort"`
+	Version                    string             `json:"version"`
+	EphemeralAccountExpiry     time.Duration      `json:"ephemeralAccountExpiry"`
 }
 
 // ScannedHost groups a host's settings with its public key and other scan-
