@@ -75,6 +75,12 @@ func (sc *statsConn) Write(p []byte) (int, error) {
 	return n, err
 }
 
+type FinancialStats struct {
+	DownloadCost types.Currency
+	UploadCost   types.Currency
+	StorageCost  types.Currency
+}
+
 // A Session is an ongoing exchange of RPCs via the renter-host protocol.
 type Session struct {
 	sess        *renterhost.Session
@@ -90,6 +96,8 @@ type Session struct {
 	height types.BlockHeight
 	rev    ContractRevision
 	key    ed25519.PrivateKey
+
+	Financials FinancialStats
 }
 
 // HostKey returns the public key of the host.
@@ -509,6 +517,9 @@ func (s *Session) Read(w io.Writer, sections []renterhost.RPCReadRequestSection)
 	s.rev.Signatures[0].Signature = renterSig
 	s.rev.Signatures[1].Signature = hostSig
 
+	//add financial calculations
+	s.Financials.DownloadCost = s.Financials.DownloadCost.Add(bandwidthPrice)
+
 	return nil
 }
 
@@ -568,7 +579,9 @@ func (s *Session) Write(actions []renterhost.RPCWriteAction) (err error) {
 	// TODO: calculate exact sizes
 	proofSize := merkle.DiffProofSize(actions, s.rev.NumSectors())
 	downloadBandwidth := uint64(proofSize) * crypto.HashSize
-	bandwidthPrice := s.host.UploadBandwidthPrice.Mul64(uploadBandwidth).Add(s.host.DownloadBandwidthPrice.Mul64(downloadBandwidth))
+	uploadBandwidthPrice := s.host.UploadBandwidthPrice.Mul64(uploadBandwidth)
+	downloadBandwidthPrice := s.host.DownloadBandwidthPrice.Mul64(downloadBandwidth)
+	bandwidthPrice := uploadBandwidthPrice.Add(downloadBandwidthPrice)
 
 	// check that enough funds are available
 	price := s.host.BaseRPCPrice.Add(bandwidthPrice).Add(storagePrice)
@@ -656,6 +669,11 @@ func (s *Session) Write(actions []renterhost.RPCWriteAction) (err error) {
 	s.rev.Revision = rev
 	s.rev.Signatures[0].Signature = renterSig.Signature
 	s.rev.Signatures[1].Signature = hostSig.Signature
+
+	//add financial calculations
+	s.Financials.DownloadCost = s.Financials.DownloadCost.Add(downloadBandwidthPrice)
+	s.Financials.UploadCost = s.Financials.UploadCost.Add(uploadBandwidthPrice)
+	s.Financials.StorageCost = s.Financials.StorageCost.Add(storagePrice)
 
 	return nil
 }
