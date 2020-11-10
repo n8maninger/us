@@ -5,7 +5,7 @@ import (
 	"io"
 	"math/bits"
 
-	"gitlab.com/NebulousLabs/Sia/crypto"
+	"gitlab.com/scpcorp/ScPrime/crypto"
 	"lukechampine.com/us/merkle/blake2b"
 	"lukechampine.com/us/renterhost"
 )

@@ -3,8 +3,8 @@ package host
 import (
 	"errors"
 
-	"gitlab.com/NebulousLabs/Sia/crypto"
-	"gitlab.com/NebulousLabs/Sia/types"
+	"gitlab.com/scpcorp/ScPrime/crypto"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"lukechampine.com/us/merkle"
 	"lukechampine.com/us/renterhost"
 )

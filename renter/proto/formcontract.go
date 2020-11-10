@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"gitlab.com/NebulousLabs/Sia/crypto"
-	"gitlab.com/NebulousLabs/Sia/types"
+	"gitlab.com/scpcorp/ScPrime/crypto"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"lukechampine.com/us/ed25519hash"
 	"lukechampine.com/us/hostdb"
 	"lukechampine.com/us/renterhost"
@@ -221,7 +221,7 @@ func taxAdjustedPayout(target types.Currency) types.Currency {
 	// types.SiafundCount greater than the actual payout value.
 	guess := target.Big()
 	guess.Mul(guess, big.NewInt(1000))
-	guess.Div(guess, big.NewInt(961))
+	guess.Div(guess, big.NewInt(850))
 
 	// now, adjust the guess to remove the rounding error. We know that:
 	//
@@ -238,7 +238,7 @@ func taxAdjustedPayout(target types.Currency) types.Currency {
 	//                  = 91211572
 	//   target % 10000 =     4321
 	//   adjusted_guess = 91204321
-	sfc := types.SiafundCount.Big()
+	sfc := types.SiafundCount(types.SpfHardforkHeight + 1).Big()
 	tm := new(big.Int).Mod(target.Big(), sfc)
 	gm := new(big.Int).Mod(guess, sfc)
 	if gm.Cmp(tm) < 0 {

@@ -6,7 +6,7 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"gitlab.com/NebulousLabs/Sia/crypto"
+	"gitlab.com/scpcorp/ScPrime/crypto"
 	"lukechampine.com/us/ed25519hash/internal/edwards25519"
 )
 

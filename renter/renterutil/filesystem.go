@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"gitlab.com/NebulousLabs/Sia/crypto"
+	"gitlab.com/scpcorp/ScPrime/crypto"
 	"lukechampine.com/us/hostdb"
 	"lukechampine.com/us/renter"
 )

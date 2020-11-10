@@ -9,9 +9,9 @@ import (
 	"testing"
 
 	"github.com/pkg/errors"
-	"gitlab.com/NebulousLabs/Sia/crypto"
-	"gitlab.com/NebulousLabs/Sia/types"
 	"gitlab.com/NebulousLabs/encoding"
+	"gitlab.com/scpcorp/ScPrime/crypto"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"golang.org/x/crypto/chacha20poly1305"
 	"lukechampine.com/frand"
 )
@@ -33,19 +33,19 @@ var randomTxn = func() types.Transaction {
 		}},
 		SiacoinOutputs: []types.SiacoinOutput{{
 			UnlockHash: frand.Entropy256(),
-			Value:      types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
+			Value:      types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
 		}},
 		FileContracts: []types.FileContract{{
 			FileSize:       frand.Uint64n(100),
 			FileMerkleRoot: frand.Entropy256(),
 			WindowStart:    types.BlockHeight(frand.Uint64n(100)),
 			WindowEnd:      types.BlockHeight(frand.Uint64n(100)),
-			Payout:         types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
+			Payout:         types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
 			ValidProofOutputs: []types.SiacoinOutput{{
-				Value: types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
+				Value: types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
 			}},
 			MissedProofOutputs: []types.SiacoinOutput{{
-				Value: types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
+				Value: types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
 			}},
 			RevisionNumber: frand.Uint64n(100),
 			UnlockHash:     frand.Entropy256(),
@@ -63,10 +63,10 @@ var randomTxn = func() types.Transaction {
 			NewWindowStart:    types.BlockHeight(frand.Uint64n(100)),
 			NewWindowEnd:      types.BlockHeight(frand.Uint64n(100)),
 			NewValidProofOutputs: []types.SiacoinOutput{{
-				Value: types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
+				Value: types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
 			}},
 			NewMissedProofOutputs: []types.SiacoinOutput{{
-				Value: types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
+				Value: types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
 			}},
 			NewUnlockHash: frand.Entropy256(),
 		}},
@@ -84,10 +84,10 @@ var randomTxn = func() types.Transaction {
 		}},
 		SiafundOutputs: []types.SiafundOutput{{
 			UnlockHash: frand.Entropy256(),
-			Value:      types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
-			ClaimStart: types.SiacoinPrecision.Mul64(frand.Uint64n(100)),
+			Value:      types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
+			ClaimStart: types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100)),
 		}},
-		MinerFees:     []types.Currency{types.SiacoinPrecision.Mul64(frand.Uint64n(100))},
+		MinerFees:     []types.Currency{types.ScPrimecoinPrecision.Mul64(frand.Uint64n(100))},
 		ArbitraryData: [][]byte{frand.Bytes(100)},
 		TransactionSignatures: []types.TransactionSignature{{
 			ParentID:       frand.Entropy256(),

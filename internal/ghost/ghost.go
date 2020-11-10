@@ -11,9 +11,9 @@ import (
 	"sync"
 	"testing"
 
-	"gitlab.com/NebulousLabs/Sia/crypto"
-	"gitlab.com/NebulousLabs/Sia/modules"
-	"gitlab.com/NebulousLabs/Sia/types"
+	"gitlab.com/scpcorp/ScPrime/crypto"
+	"gitlab.com/scpcorp/ScPrime/modules"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"lukechampine.com/frand"
 	"lukechampine.com/us/ed25519hash"
 	"lukechampine.com/us/host"
@@ -25,11 +25,11 @@ import (
 var DefaultSettings = hostdb.HostSettings{
 	AcceptingContracts:     true,
 	MaxDuration:            144,
-	MaxCollateral:          types.SiacoinPrecision.Mul64(1e9),
-	ContractPrice:          types.SiacoinPrecision,
-	StoragePrice:           types.SiacoinPrecision.Div64(1e9),
-	UploadBandwidthPrice:   types.SiacoinPrecision.Div64(2e9),
-	DownloadBandwidthPrice: types.SiacoinPrecision.Div64(3e9),
+	MaxCollateral:          types.ScPrimecoinPrecision.Mul64(1e9),
+	ContractPrice:          types.ScPrimecoinPrecision,
+	StoragePrice:           types.ScPrimecoinPrecision.Div64(1e9),
+	UploadBandwidthPrice:   types.ScPrimecoinPrecision.Div64(2e9),
+	DownloadBandwidthPrice: types.ScPrimecoinPrecision.Div64(3e9),
 	WindowSize:             5,
 	Version:                "1.5.0",
 	Make:                   "ghost",

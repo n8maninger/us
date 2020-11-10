@@ -16,7 +16,7 @@ import (
 
 	"github.com/aead/chacha20/chacha"
 	"github.com/pkg/errors"
-	"gitlab.com/NebulousLabs/Sia/crypto"
+	"gitlab.com/scpcorp/ScPrime/crypto"
 	"lukechampine.com/frand"
 	"lukechampine.com/us/hostdb"
 	"lukechampine.com/us/merkle"

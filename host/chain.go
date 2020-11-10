@@ -7,8 +7,8 @@ import (
 	"math/bits"
 	"strings"
 
-	"gitlab.com/NebulousLabs/Sia/modules"
-	"gitlab.com/NebulousLabs/Sia/types"
+	"gitlab.com/scpcorp/ScPrime/modules"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"golang.org/x/crypto/blake2b"
 	"lukechampine.com/us/merkle"
 )
@@ -31,7 +31,7 @@ func ContractIsActionable(c Contract, currentHeight types.BlockHeight) bool {
 func minFee(tp TransactionPool) types.Currency {
 	_, max, err := tp.FeeEstimate()
 	if err != nil {
-		max = types.SiacoinPrecision.Div64(1e3) // TODO: reasonable?
+		max = types.ScPrimecoinPrecision.Div64(1e3) // TODO: reasonable?
 	}
 	return max
 }

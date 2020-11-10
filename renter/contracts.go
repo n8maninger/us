@@ -3,7 +3,7 @@ package renter
 import (
 	"crypto/ed25519"
 
-	"gitlab.com/NebulousLabs/Sia/types"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"lukechampine.com/us/hostdb"
 )
 

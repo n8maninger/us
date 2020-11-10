@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/NebulousLabs/Sia/crypto"
-	"gitlab.com/NebulousLabs/Sia/modules"
-	"gitlab.com/NebulousLabs/Sia/types"
+	"gitlab.com/scpcorp/ScPrime/crypto"
+	"gitlab.com/scpcorp/ScPrime/modules"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"lukechampine.com/frand"
 )
 
@@ -39,8 +39,7 @@ func (m *mockCS) sendTxn(txn types.Transaction) {
 		AppliedBlocks: []types.Block{{
 			Transactions: []types.Transaction{txn},
 		}},
-		SiacoinOutputDiffs: outputs,
-		ID:                 frand.Entropy256(),
+		ID: frand.Entropy256(),
 	}
 	m.subscriber.ProcessConsensusChange(cc)
 	m.height++
@@ -58,12 +57,7 @@ func (m *mockCS) mineBlock(fees types.Currency, addr types.UnlockHash) {
 	b.MinerPayouts[0].Value = b.CalculateSubsidy(0)
 	cc := modules.ConsensusChange{
 		AppliedBlocks: []types.Block{b},
-		DelayedSiacoinOutputDiffs: []modules.DelayedSiacoinOutputDiff{{
-			SiacoinOutput:  b.MinerPayouts[0],
-			ID:             b.MinerPayoutID(0),
-			MaturityHeight: types.MaturityDelay,
-		}},
-		ID: frand.Entropy256(),
+		ID:            frand.Entropy256(),
 	}
 	for _, dsco := range m.dscos[m.height] {
 		cc.SiacoinOutputDiffs = append(cc.SiacoinOutputDiffs, modules.SiacoinOutputDiff{
@@ -99,12 +93,7 @@ func (m *mockCS) formContract(payout types.Currency, addr types.UnlockHash) {
 	}
 	cc := modules.ConsensusChange{
 		AppliedBlocks: []types.Block{b},
-		FileContractDiffs: []modules.FileContractDiff{{
-			FileContract: b.Transactions[0].FileContracts[0],
-			ID:           b.Transactions[0].FileContractID(0),
-			Direction:    modules.DiffApply,
-		}},
-		ID: frand.Entropy256(),
+		ID:            frand.Entropy256(),
 	}
 	m.subscriber.ProcessConsensusChange(cc)
 	m.height++
@@ -139,19 +128,7 @@ func (m *mockCS) reviseContract(id types.FileContractID) {
 	}
 	cc := modules.ConsensusChange{
 		AppliedBlocks: []types.Block{b},
-		FileContractDiffs: []modules.FileContractDiff{
-			{
-				FileContract: m.filecontracts[id],
-				ID:           id,
-				Direction:    modules.DiffRevert,
-			},
-			{
-				FileContract: fc,
-				ID:           id,
-				Direction:    modules.DiffApply,
-			},
-		},
-		ID: frand.Entropy256(),
+		ID:            frand.Entropy256(),
 	}
 	m.subscriber.ProcessConsensusChange(cc)
 	m.height++
@@ -239,13 +216,13 @@ func TestWallet(t *testing.T) {
 	// simulate a transaction
 	cs.sendTxn(types.Transaction{
 		SiacoinOutputs: []types.SiacoinOutput{
-			{UnlockHash: addr, Value: types.SiacoinPrecision.Div64(2)},
-			{UnlockHash: addr, Value: types.SiacoinPrecision.Div64(2)},
+			{UnlockHash: addr, Value: types.ScPrimecoinPrecision.Div64(2)},
+			{UnlockHash: addr, Value: types.ScPrimecoinPrecision.Div64(2)},
 		},
 	})
 
 	// get new balance
-	if !w.Balance(false).Equals(types.SiacoinPrecision) {
+	if !w.Balance(false).Equals(types.ScPrimecoinPrecision) {
 		t.Fatal("balance should be 1 SC")
 	}
 
@@ -286,7 +263,7 @@ func TestWallet(t *testing.T) {
 			Value: o.Value,
 		}
 	}
-	amount := types.SiacoinPrecision.Div64(2)
+	amount := types.ScPrimecoinPrecision.Div64(2)
 	dest := types.UnlockHash{}
 	fee := types.NewCurrency64(10)
 	txn, ok := sendSiacoins(amount, dest, fee, inputs, addr)
@@ -359,7 +336,7 @@ func TestWalletThreadSafety(t *testing.T) {
 
 	txn := types.Transaction{
 		SiacoinOutputs: []types.SiacoinOutput{
-			{UnlockHash: CalculateUnlockHash(info.UnlockConditions), Value: types.SiacoinPrecision.Div64(2)},
+			{UnlockHash: CalculateUnlockHash(info.UnlockConditions), Value: types.ScPrimecoinPrecision.Div64(2)},
 		},
 	}
 
@@ -458,8 +435,8 @@ func TestHotWallet(t *testing.T) {
 	// simulate a transaction
 	cs.sendTxn(types.Transaction{
 		SiacoinOutputs: []types.SiacoinOutput{
-			{UnlockHash: addr, Value: types.SiacoinPrecision.Div64(2)},
-			{UnlockHash: addr, Value: types.SiacoinPrecision.Div64(2)},
+			{UnlockHash: addr, Value: types.ScPrimecoinPrecision.Div64(2)},
+			{UnlockHash: addr, Value: types.ScPrimecoinPrecision.Div64(2)},
 		},
 	})
 
@@ -471,7 +448,7 @@ func TestHotWallet(t *testing.T) {
 	}
 
 	// get new balance
-	if !w.Balance(false).Equals(types.SiacoinPrecision) {
+	if !w.Balance(false).Equals(types.ScPrimecoinPrecision) {
 		t.Fatal("balance should be 1 SC, got", w.Balance(false).HumanString())
 	}
 
@@ -492,7 +469,7 @@ func TestHotWallet(t *testing.T) {
 	if len(inputs) != 2 {
 		t.Fatal("should have two UTXOs")
 	}
-	amount := types.SiacoinPrecision.Div64(2)
+	amount := types.ScPrimecoinPrecision.Div64(2)
 	dest := types.UnlockHash{}
 	fee := types.NewCurrency64(10)
 	txn, ok := sendSiacoins(amount, dest, fee, inputs, addr)
@@ -543,7 +520,7 @@ func TestHotWallet(t *testing.T) {
 	}
 
 	// mine a block reward
-	cs.mineBlock(types.SiacoinPrecision, addr)
+	cs.mineBlock(types.ScPrimecoinPrecision, addr)
 	rewards := w.BlockRewards(-1)
 	if len(rewards) != 1 {
 		t.Fatal("should have one block reward")
@@ -564,7 +541,7 @@ func TestHotWallet(t *testing.T) {
 	}
 
 	// form a file contract
-	cs.formContract(types.SiacoinPrecision, addr)
+	cs.formContract(types.ScPrimecoinPrecision, addr)
 	fcs := w.FileContracts(-1)
 	if len(fcs) != 1 {
 		t.Fatal("should have one file contract")
@@ -588,7 +565,7 @@ func TestHotWalletThreadSafety(t *testing.T) {
 	addr, _ := w.Address()
 	txn := types.Transaction{
 		SiacoinOutputs: []types.SiacoinOutput{
-			{UnlockHash: addr, Value: types.SiacoinPrecision.Div64(2)},
+			{UnlockHash: addr, Value: types.ScPrimecoinPrecision.Div64(2)},
 		},
 	}
 

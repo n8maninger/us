@@ -3,10 +3,10 @@ package host
 import (
 	"crypto/ed25519"
 
-	"gitlab.com/NebulousLabs/Sia/crypto"
-	"gitlab.com/NebulousLabs/Sia/modules"
-	"gitlab.com/NebulousLabs/Sia/types"
 	"gitlab.com/NebulousLabs/encoding"
+	"gitlab.com/scpcorp/ScPrime/crypto"
+	"gitlab.com/scpcorp/ScPrime/modules"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"golang.org/x/crypto/blake2b"
 	"lukechampine.com/us/ed25519hash"
 	"lukechampine.com/us/renterhost"

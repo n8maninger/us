@@ -12,13 +12,13 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/NebulousLabs/Sia/build"
-	"gitlab.com/NebulousLabs/Sia/crypto"
-	"gitlab.com/NebulousLabs/Sia/modules"
-	"gitlab.com/NebulousLabs/Sia/modules/consensus"
-	"gitlab.com/NebulousLabs/Sia/modules/gateway"
-	"gitlab.com/NebulousLabs/Sia/modules/transactionpool"
-	"gitlab.com/NebulousLabs/Sia/types"
+	"gitlab.com/scpcorp/ScPrime/build"
+	"gitlab.com/scpcorp/ScPrime/crypto"
+	"gitlab.com/scpcorp/ScPrime/modules"
+	"gitlab.com/scpcorp/ScPrime/modules/consensus"
+	"gitlab.com/scpcorp/ScPrime/modules/gateway"
+	"gitlab.com/scpcorp/ScPrime/modules/transactionpool"
+	"gitlab.com/scpcorp/ScPrime/types"
 	"lukechampine.com/us/hostdb"
 	"lukechampine.com/us/internal/ghost"
 	"lukechampine.com/us/renter/proto"
@@ -191,7 +191,7 @@ func TestIntegrationHost(t *testing.T) {
 		PublicKey:    host.PublicKey,
 	}
 	contractKey := ed25519.NewKeyFromSeed(make([]byte, ed25519.SeedSize))
-	rev, _, err := proto.FormContract(renterNode.wallet, tpoolBridge{renterNode.tp}, contractKey, scannedHost, types.SiacoinPrecision.Mul64(1e3), currrentHeight, currrentHeight+10)
+	rev, _, err := proto.FormContract(renterNode.wallet, tpoolBridge{renterNode.tp}, contractKey, scannedHost, types.ScPrimecoinPrecision.Mul64(1e3), currrentHeight, currrentHeight+10)
 	if err != nil {
 		t.Fatal(err)
 	}

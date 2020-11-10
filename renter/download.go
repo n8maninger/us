@@ -5,7 +5,7 @@ import (
 	"io"
 
 	"github.com/pkg/errors"
-	"gitlab.com/NebulousLabs/Sia/modules"
+	"gitlab.com/scpcorp/ScPrime/modules"
 	"lukechampine.com/us/hostdb"
 	"lukechampine.com/us/merkle"
 	"lukechampine.com/us/renter/proto"
